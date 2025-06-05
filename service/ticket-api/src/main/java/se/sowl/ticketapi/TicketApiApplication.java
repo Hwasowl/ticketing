@@ -1,13 +1,13 @@
-package se.sowl;
+package se.sowl.ticketapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TicketingApplication {
+public class TicketApiApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(TicketingApplication.class, args);
+        SpringApplication.run(TicketApiApplication.class, args);
     }
 
 }

@@ -1,7 +1,7 @@
-pluginManagement {
-    repositories {
-        maven { url 'https://repo.spring.io/snapshot' }
-        gradlePluginPortal()
-    }
-}
-rootProject.name = 'sowl'
+rootProject.name = 'ticketing'
+
+include 'service'
+include 'service:ticket-api'
+include 'service:ticket-consumer'
+include 'service:ticket-batch'
+include 'service:ticket-domain'
