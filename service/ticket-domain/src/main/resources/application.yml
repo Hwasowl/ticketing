@@ -1,18 +1,22 @@
 server.port: 9000
 spring:
   application:
-    name: kuke-board-article-service
+    name: ticker-domain
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/article
+    url: jdbc:mysql://127.0.0.1:3306/coupon
     username: root
     password: root
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
     open-in-view: false
-    show-sql: true
+    show-sql: false
     hibernate:
       ddl-auto: none
+    properties:
+        hibernate:
+          jdbc:
+            batch_size: 1000
   data:
     redis:
       host: 127.0.0.1

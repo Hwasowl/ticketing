@@ -1,4 +1,4 @@
-package se.sowl.ticketdomain;
+package se.sowl.ticketconsumer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
