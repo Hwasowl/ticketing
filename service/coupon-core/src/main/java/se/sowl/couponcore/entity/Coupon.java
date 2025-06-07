@@ -48,9 +48,15 @@ public class Coupon extends BaseTimeEntity {
         return coupon;
     }
 
-    public boolean isValidDate() {
-        return startAt.isAfter(LocalDateTime.now()) || endAt.isBefore(LocalDateTime.now());
+    public void disable() {
+        this.status = CouponStatus.DISABLED;
     }
+
+    public boolean isValidDate() {
+        LocalDateTime now = LocalDateTime.now();
+        return (now.isEqual(startAt) || now.isAfter(startAt)) && now.isBefore(endAt);
+    }
+
 
     public void issue() {
         if (remainCount <= 0) {
