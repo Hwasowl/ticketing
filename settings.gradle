@@ -1,7 +1,7 @@
 rootProject.name = 'ticketing'
 
 include 'service'
-include 'service:ticket-api'
-include 'service:ticket-consumer'
-include 'service:ticket-batch'
-include 'service:ticket-domain'
+include 'service:coupon-api'
+include 'service:coupon-consumer'
+include 'service:coupon-batch'
+include 'service:coupon-core'
