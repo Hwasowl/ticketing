@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import se.sowl.couponcore.exception.CouponIssueException;
+import se.sowl.couponcore.exception.ErrorCode;
 
 import java.time.LocalDateTime;
 
@@ -44,5 +46,22 @@ public class Coupon extends BaseTimeEntity {
         coupon.endAt = endAt;
         coupon.status = CouponStatus.ENABLED;
         return coupon;
+    }
+
+    public boolean isValidDate() {
+        return startAt.isAfter(LocalDateTime.now()) || endAt.isBefore(LocalDateTime.now());
+    }
+
+    public void issue() {
+        if (remainCount <= 0) {
+            throw new CouponIssueException(ErrorCode.INVALID_COUPON_ISSUE_QUANTITY, "발급 가능한 수량이 없습니다.");
+        }
+        if (!isValidDate()) {
+            throw new CouponIssueException(ErrorCode.INVALID_COUPON_ISSUE_DATE, "쿠폰 발급 기간이 아닙니다.");
+        }
+        if (status != CouponStatus.ENABLED) {
+            throw new CouponIssueException(ErrorCode.COUPON_NOT_AVAILABLE, "유효하지 않은 쿠폰입니다.");
+        }
+        remainCount--;
     }
 }

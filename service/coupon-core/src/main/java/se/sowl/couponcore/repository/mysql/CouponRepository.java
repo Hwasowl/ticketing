@@ -1,4 +1,4 @@
-package se.sowl.couponcore.repository;
+package se.sowl.couponcore.repository.mysql;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
