@@ -9,7 +9,7 @@ class IssueCoupon(FastHttpUser):
     def issue(self):
         payload = {
             "userId" : random.randint(1, 10000000),
-            "couponId" : 11,
+            "couponId" : 12,
         }
         with self.rest("POST", "/v1/issue", json=payload):
             pass

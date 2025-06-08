@@ -16,12 +16,22 @@ public class CouponIssueService {
     private final CouponRepository couponRepository;
     private final CouponIssueRepository couponIssueRepository;
 
-    @Transactional
-    public void issue(long couponId, long userId) {
+    public void syncIssue(long couponId, long userId) {
+        synchronized (this) {
+            issue(couponId, userId);
+        }
+    }
+
+    private void issue(long couponId, long userId) {
         Coupon coupon = couponRepository.findById(couponId)
             .orElseThrow(() -> new CouponIssueException(ErrorCode.COUPON_NOT_EXIST, "쿠폰 정책이 존재하지 않습니다. " + couponId));
+        issueCoupon(couponId, userId, coupon);
+    }
+
+    private void issueCoupon(long couponId, long userId, Coupon coupon) {
         checkIsAlreadyIssued(couponId, userId);
         coupon.issue();
+        couponRepository.save(coupon);
         couponIssueRepository.save(CouponIssue.success(userId, couponId));
     }
 

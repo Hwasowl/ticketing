@@ -15,7 +15,7 @@ public class CouponIssueController {
     @PostMapping("/v1/issue")
     public CouponIssueResponseDto issueV1(@RequestBody CouponIssueRequestDto request) {
         // 쿠폰 발급 요청
-        couponIssueRequestService.issueRequest(request.couponId(), request.userId());
+        couponIssueRequestService.issueRequest(request);
         return new CouponIssueResponseDto(true, null);
     }
 }
