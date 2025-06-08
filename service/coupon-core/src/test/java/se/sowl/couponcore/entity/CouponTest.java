@@ -3,9 +3,6 @@ package se.sowl.couponcore.entity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.Test;
 import se.sowl.couponcore.exception.CouponIssueException;
 
 import java.time.LocalDateTime;
@@ -25,16 +22,16 @@ class CouponTest {
         coupon.issue();
 
         // then
-        assertThat(coupon.getRemainCount()).isEqualTo(9);
+        assertThat(coupon.getIssuedQuantity()).isEqualTo(9);
     }
 
     @Test
-    @DisplayName("쿠폰 발급 시 남은 수량이 0이 되면 발급 불가능.")
+    @DisplayName("쿠폰 발급 시 제한 수량보다 더 많이 발급할 수 없다.")
     void issueFailWhenOutOfStocked() {
         // given
         LocalDateTime now = LocalDateTime.now();
         Coupon coupon = Coupon.create("TEST-COUPON-1", 1, now.minusMinutes(1), now.plusMinutes(5));
-        coupon.issue(); // 1장 소진
+        coupon.issue(); // 1개 발급
 
         // when & then
         assertThatThrownBy(coupon::issue)
