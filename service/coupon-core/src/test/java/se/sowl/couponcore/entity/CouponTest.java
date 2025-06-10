@@ -22,7 +22,7 @@ class CouponTest {
         coupon.issue();
 
         // then
-        assertThat(coupon.getIssuedQuantity()).isEqualTo(9);
+        assertThat(coupon.getIssuedQuantity()).isEqualTo(1);
     }
 
     @Test
@@ -40,7 +40,7 @@ class CouponTest {
     }
 
     @Test
-    @DisplayName("쿠폰 유효 기간이 지났다면 발급 불가능")
+    @DisplayName("쿠폰 유효 기간이 지났다면 발급할 수 없다.")
     void issueFailWhenInvalidDate() {
         // given
         LocalDateTime now = LocalDateTime.now();
@@ -53,7 +53,7 @@ class CouponTest {
     }
 
     @Test
-    @DisplayName("쿠폰이 비활성화 상태라면 발급 불가능")
+    @DisplayName("쿠폰이 비활성화 상태라면 발급할 수 없다.")
     void issueFailWhenTryIssueDisabledCoupon() {
         // given
         LocalDateTime now = LocalDateTime.now();

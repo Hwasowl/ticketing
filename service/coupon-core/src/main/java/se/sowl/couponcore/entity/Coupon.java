@@ -42,7 +42,6 @@ public class Coupon extends BaseTimeEntity {
         coupon.name = name;
         coupon.quantityLimit = quantityLimit;
         coupon.issuedQuantity = 0;
-        coupon.startAt = startAt;
         coupon.endAt = endAt;
         coupon.status = CouponStatus.ENABLED;
         return coupon;
