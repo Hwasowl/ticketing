@@ -27,4 +27,8 @@ public class RedisRepository {
         Long size = redisTemplate.opsForList().size(key);
         return size == null ? 0L : size;
     }
+
+    public Long sCard(String key) {
+        return redisTemplate.opsForSet().size(key);
+    }
 }

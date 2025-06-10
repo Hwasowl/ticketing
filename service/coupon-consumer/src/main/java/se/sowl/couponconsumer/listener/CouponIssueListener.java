@@ -29,11 +29,10 @@ public class CouponIssueListener {
             CouponIssueRequest target = getIssueQueue();
             log.info("[발급 시작] target : %s".formatted(target.getUserId()));
             try {
-                couponIssueService.issueV2(target.getCouponId(), target.getUserId());
+                couponIssueService.issue(target.getCouponId(), target.getUserId());
             } catch(Exception e) {
-                log.error("[발급 실패] target : %s, error: %s".formatted(target.getUserId() + " / " + target.getUserId(), e.getMessage()));
+                log.error("[발급 실패] target : %s, error: %s".formatted(target.getCouponId() + " / " + target.getUserId(), e.getMessage()));
                 removeIssueQueue();
-                // 발급 실패 사유 저장
                 continue;
             }
             log.info("[발급 완료] target : %s".formatted(target.getCouponId()));

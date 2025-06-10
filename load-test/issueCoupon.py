@@ -1,15 +1,20 @@
 import random
-from locust import task, FastHttpUser
+from locust import HttpUser, task, between
 
-class IssueCoupon(FastHttpUser):
-    connection_timeout = 10.0
-    network_timeout = 10.0
+class CouponUser(HttpUser):
+    wait_time = between(0.01, 0.02)  # 빠른 부하
+
+    ports = [8080, 8081, 8082]
 
     @task
-    def issue(self):
+    def issue_coupon(self):
+        # 랜덤 포트 선택
+        port = random.choice(self.ports)
+        # base_url을 직접 바꿈
+        self.client.base_url = f"http://localhost:{port}"
+
         payload = {
-            "userId" : random.randint(1, 10000000),
-            "couponId" : 13,
+            "couponId": 16,
+            "userId": random.randint(1, 10000000)
         }
-        with self.rest("POST", "/v3/issue", json=payload):
-            pass
+        self.client.post("/v3/issue", json=payload)

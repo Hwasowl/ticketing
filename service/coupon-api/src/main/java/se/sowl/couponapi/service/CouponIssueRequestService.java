@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import se.sowl.couponapi.dto.CouponIssueRequest;
 import se.sowl.couponcore.service.CouponIssueService;
+import se.sowl.couponcore.service.SyncCouponIssueService;
 
 @Slf4j
 @Service
@@ -12,24 +13,20 @@ import se.sowl.couponcore.service.CouponIssueService;
 public class CouponIssueRequestService {
 
     private final CouponIssueService couponIssueService;
+    private final SyncCouponIssueService syncCouponIssueService;
 
     public void issueRequestV1(CouponIssueRequest request) {
         couponIssueService.issue(request.couponId(), request.userId());
-        printLog(request);
     }
 
+    // 단일 서버 - 스레드 동기화 처리로 문제 해결
     public void issueRequestV2(CouponIssueRequest request) {
-        couponIssueService.syncIssue(request.couponId(), request.userId());
-        printLog(request);
+        syncCouponIssueService.syncIssue(request.couponId(), request.userId());
     }
 
+    // 분산 서버 - 분산 락을 사용해 문제 해결
     public void issueRequestV3(CouponIssueRequest request) {
-        couponIssueService.issueEvent(request.couponId(), request.userId());
-        log.info("쿠폰 발급 이벤트 발행 완료. couponId: {}, userId: {}", request.couponId(), request.userId());
-    }
-
-    private static void printLog(CouponIssueRequest request) {
-        log.info("쿠폰 발급 완료. couponId: {}, userId: {}", request.couponId(), request.userId());
+        couponIssueService.distributedLockIssue(request.couponId(), request.userId());
     }
 }
 
